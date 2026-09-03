@@ -1,7 +1,7 @@
 [project]
 name = "methdup"
 version = "0.1.0"
-description = "Add your description here"
+description = "One-pass duplicate marking for coordinate-sorted BAM files"
 readme = "README.md"
 authors = [
     { name = "vmduarut", email = "victor.dr95@gmail.com" }
@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-methdup = "methdup:main"
+methdup = "methdup.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13.0"]
