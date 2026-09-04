@@ -10,7 +10,13 @@ from pathlib import Path
 import pysam
 
 from .bam_io import atomic_bam_writer, open_coordinate_sorted_bam, validate_paths
-from .models import BufferedRecord, Counters, DeduplicationError, DuplicateGroup
+from .models import (
+    BufferedRecord,
+    Counters,
+    DeduplicationError,
+    DuplicateGroup,
+    PairKey,
+)
 from .pairing import PairEvent, ReadEvent, ReleaseEvent, iter_pairing_events
 
 
@@ -50,8 +56,8 @@ def _deduplicate_records(
 ) -> None:
     """Manage coordinate ordering and duplicate groups over pairing events."""
     buffer: deque[BufferedRecord] = deque()
-    groups: dict[tuple[object, ...], DuplicateGroup] = {}
-    group_heap: list[tuple[int, int, tuple[object, ...]]] = []
+    groups: dict[PairKey, DuplicateGroup] = {}
+    group_heap: list[tuple[int, int, PairKey]] = []
     group_sequence = 0
     current_reference: int | None = None
     current_start: int | None = None

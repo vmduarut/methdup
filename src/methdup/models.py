@@ -11,6 +11,20 @@ class DeduplicationError(RuntimeError):
     """Raised when input cannot safely be deduplicated in one pass."""
 
 
+@dataclass(frozen=True, slots=True)
+class PairKey:
+    """Immutable alignment identity used to group duplicate fragments."""
+
+    read1_reference: int
+    read1_start: int
+    read1_reverse: bool
+    read1_cigar: str | None
+    read2_reference: int
+    read2_start: int
+    read2_reverse: bool
+    read2_cigar: str | None
+
+
 @dataclass
 class Counters:
     total_records: int = 0
@@ -34,7 +48,7 @@ class BufferedRecord:
 class Pair:
     first: BufferedRecord
     second: BufferedRecord
-    key: tuple[object, ...]
+    key: PairKey
     rightmost_start: int
     input_order: int
 
@@ -45,6 +59,6 @@ class Pair:
 
 @dataclass
 class DuplicateGroup:
-    key: tuple[object, ...]
+    key: PairKey
     rightmost_start: int
     pairs: list[Pair] = field(default_factory=list)

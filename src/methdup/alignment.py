@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import pysam
 
+from .models import PairKey
+
 
 def is_candidate(record: pysam.AlignedSegment) -> bool:
     """Return whether a record can be one end of an eligible duplicate pair."""
@@ -20,9 +22,9 @@ def is_candidate(record: pysam.AlignedSegment) -> bool:
     )
 
 
-def pair_key(read1: pysam.AlignedSegment, read2: pysam.AlignedSegment) -> tuple[object, ...]:
+def pair_key(read1: pysam.AlignedSegment, read2: pysam.AlignedSegment) -> PairKey:
     """Return the full alignment identity used to group duplicate fragments."""
-    return (
+    return PairKey(
         read1.reference_id,
         read1.reference_start,
         read1.is_reverse,
