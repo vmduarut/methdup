@@ -53,7 +53,12 @@ class Pair:
     input_order: int
 
     @property
-    def quality(self) -> int:
+    def base_quality_sum(self) -> int:
+        """Return the combined base-quality sum used to choose a group winner.
+
+        Missing query-quality arrays contribute zero, allowing the processor to
+        compare otherwise valid pairs deterministically.
+        """
         return sum(self.first.record.query_qualities or ()) + sum(self.second.record.query_qualities or ())
 
 
