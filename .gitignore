@@ -1,3 +1,9 @@
+# Rust build artifacts
+/target
+
+# Local search index
+.tgrep/
+
 # Python-generated files
 __pycache__/
 *.py[oc]

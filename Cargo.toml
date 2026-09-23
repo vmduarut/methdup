@@ -1,0 +1,16 @@
+[package]
+name = "methdup"
+version = "0.1.0"
+edition = "2024"
+description = "One-pass duplicate marking for coordinate-sorted BAM files"
+readme = "README.md"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+bstr = "1.13"
+noodles = { version = "0.116", features = ["bam", "bgzf", "core", "sam"] }
+thiserror = "2"
+tempfile = "3"
+
+[profile.release]
+lto = true
